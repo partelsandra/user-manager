@@ -3,7 +3,8 @@
     padding: 1rem;
     width: 90%;
     max-width: 40rem;
-    border: 1px solid #4f005f;
+    border: 1px solid deeppink;
+    border-radius: 5px;
 }
 .add_user label {
     display: block;
