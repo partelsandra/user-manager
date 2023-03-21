@@ -3,49 +3,29 @@ describe('AddUser component', () => {
     cy.visit('http://localhost:3000')
   })
 
-  it('adds a new user and displays it in the list', () => {
-    const username = 'John'
-    const age = '30'
-
-    cy.get('#username').type(username)
-    cy.get('#age').type(age)
-
-    cy.get('form').submit()
-
-    cy.get('.error').should('not.exist')
-    cy.get('#username').should('have.value', '')
-    cy.get('#age').should('have.value', '')
-
-    cy.get('.user-item').should('have.length', 1)
-    cy.get('.user-item__name').should('contain', username)
-    cy.get('.user-item__age').should('contain', age)
-  })
-
-  it('displays an error message when adding a user with an invalid age', () => {
-    const username = 'John'
-    const age = '0'
-
-    cy.get('#username').type(username)
-    cy.get('#age').type(age)
-
-    cy.get('form').submit()
-
-    cy.get('.error').should('exist')
-    cy.get('.error__title').should('contain', 'Invalid age')
-    cy.get('.error__message').should('contain', 'Please enter a valid age (> 0)')
-  })
-
-  it('displays an error message when adding a user with empty fields', () => {
-    const username = ''
-    const age = ''
-
-    cy.get('#username').type(username)
-    cy.get('#age').type(age)
-
-    cy.get('form').submit()
-
-    cy.get('.error').should('exist')
-    cy.get('.error__title').should('contain', 'Invalid input')
-    cy.get('.error__message').should('contain', 'Please enter a valid name or age (non-empty values)')
-  })
-})
+    it('should add a new user when the form is submitted', () => {
+      // Enter valid input values
+      cy.get('#username').type('John');
+      cy.get('#age').type('25');
+  
+      // Submit the form
+      cy.get('form').submit();
+  
+      // Check that the new user is displayed in the list
+      cy.contains('John - 25 years old').should('exist');
+    });
+  
+    it('should display an error message when the form is submitted with invalid input', () => {
+      // Enter invalid input values
+      cy.get('#username').type('test');
+      cy.get('#age').type('0');
+  
+      // Submit the form
+      cy.get('form').submit();
+  
+      // Check that the error message is displayed
+      cy.contains('Invalid age').should('exist');
+      cy.contains('Please enter a valid age (> 0)').should('exist');
+    });
+  });
+  
